@@ -1,7 +1,7 @@
 // CustomShader for RCEFShaders EFMI mod
 
 Texture2D<float> SceneDepth : register(t1);
-Texture1D<float4> IniParams : register(t120);
+Texture2D<float> BackBuffer : register(t2);
 
 void main(
 	float4 clipPos : SV_Position,
@@ -25,12 +25,17 @@ void main(
 		discard;
 	}
 
+	// Get the size of the depth buffer
 	uint depthWidth, depthHeight;
 	SceneDepth.GetDimensions(depthWidth, depthHeight);
 
-	// Convert screen pixel to normalized coordinates
-	float2 screenUV = clipPos.xy / float2(IniParams[180].x, IniParams[180].y);
-	screenUV.y = 1.0 - screenUV.y; // Depth texture is upside down
+	// Get the size of the game viewport
+	uint bbWidth, bbHeight;
+	BackBuffer.GetDimensions(bbWidth, bbHeight);
+
+	// Depth buffer is likely at a lower resolution so we create a multiplier
+	float2 screenUV = clipPos.xy / float2(bbWidth, bbHeight);
+	screenUV.y = 1.0 - screenUV.y; // It's also upside down
 
 	// Scale into depth texture and clamp within bounds
 	int2 depthPixel = int2(screenUV * float2(depthWidth, depthHeight));
