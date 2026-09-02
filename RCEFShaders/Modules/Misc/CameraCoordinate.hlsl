@@ -1,6 +1,6 @@
 // CustomShader for RCEFShaders EFMI mod
 
-cbuffer TerrainCB0 : register(b0)
+cbuffer CameraCB : register(b0)
 {
 	float4 cb0[82];
 };
