@@ -5,6 +5,8 @@
 !LICENSE
 
 # Don't ignore project files
+!Previews/
+!Previews/*
 !RCEFShaders/
 !RCEFShaders/*
 !Utilities/
