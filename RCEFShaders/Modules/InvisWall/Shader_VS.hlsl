@@ -36,10 +36,6 @@ void main(
 				+ cb0[34] * relativePos.z
 				+ cb0[35];
 
-	// Apply the game's temporal jitter correction
-	float2 jitter = cb1[19].zw * clip.w;
-	clip.xy += -jitter * float2(2.0, -2.0);
-
 	// Correct vertical projection and output the final clip-space position
 	clip.y = -clip.y;
 	outClipPos = clip;
