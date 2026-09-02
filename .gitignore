@@ -1,0 +1,10 @@
+# Ignore everything except ourselves and a few files
+/*
+!.gitignore
+!README.md
+
+# Don't ignore project files
+!RCEFShaders/
+!RCEFShaders/*
+!Utilities/
+!Utilities/*
