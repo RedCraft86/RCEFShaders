@@ -1,0 +1,17 @@
+-------------------- Default Keybinds --------------------
+
+[Alt] + [End]: Show/Hide this Menu
+
+[Alt] + [NUM 1]: Full AIC Region Wall (AIC Mode)
+
+[Alt] + [NUM 2]: Full AIC Tiles (AIC Mode)
+
+[Alt] + [NUM 4]: Unlit View
+
+[Alt] + [NUM 5]: Hide Foliage
+
+[Alt] + [NUM 6]: Hide Game UI
+
+[Alt] + [NUM 7]: Show Camera Coordinates
+
+[Alt] + [NUM 8]: Show Invisible Walls
