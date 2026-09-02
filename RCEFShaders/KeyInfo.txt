@@ -2,7 +2,7 @@
 
 [Alt] + [End]: Show/Hide this Menu
 
-[Alt] + [NUM 1]: Full AIC Region Wall (AIC Mode)
+[Alt] + [NUM 1]: Full AIC Region Walls (AIC Mode)
 
 [Alt] + [NUM 2]: Full AIC Tiles (AIC Mode)
 
@@ -15,3 +15,4 @@
 [Alt] + [NUM 7]: Show Camera Coordinates
 
 [Alt] + [NUM 8]: Show Invisible Walls
+(cycles between Off, Valley 4, and Wuling)
