@@ -44,36 +44,36 @@ indexCount = len(indices)
 triangleCount = indexCount // 3
 
 if vertexCount == 0:
-    raise RuntimeError("The selected mesh contains no triangles.")
+	raise RuntimeError("The selected mesh contains no triangles.")
 
 if indexCount % 3 != 0:
-    raise RuntimeError("Index count is not divisible by 3.")
+	raise RuntimeError("Index count is not divisible by 3.")
 
 outDir = os.path.join(DEST_DIR, NAME)
 os.makedirs(outDir, exist_ok=True)
 
 vertexBufferPath = os.path.join(outDir, NAME + "_VB.buf")
 with open(vertexBufferPath, "wb") as f:
-    for vertex in vertices:
-        f.write(struct.pack("<5f", *vertex))
+	for vertex in vertices:
+		f.write(struct.pack("<5f", *vertex))
 
 indexBufferPath = os.path.join(outDir, NAME + "_IB.buf")
 with open(indexBufferPath, "wb") as f:
-    for index in indices:
-        f.write(struct.pack("<I", index))
+	for index in indices:
+		f.write(struct.pack("<I", index))
 
 drawFuncPath = os.path.join(outDir, NAME + "_DrawFunc.ini")
 with open(drawFuncPath, "w", encoding="utf-8", newline="\n") as f:
-    f.write(f"drawindexed = {indexCount}, 0, 0")
+	f.write(f"drawindexed = {indexCount}, 0, 0")
 
 # Validate
 
 expectedVBSize = vertexCount * 20
 actualVBSize = os.path.getsize(vertexBufferPath)
 if actualVBSize != expectedVBSize:
-    raise RuntimeError("Vertex buffer size does not match the expected 20-byte vertex stride.")
+	raise RuntimeError("Vertex buffer size does not match the expected 20-byte vertex stride.")
 
 expectedIBSize = indexCount * 4
 actualIBSize = os.path.getsize(indexBufferPath)
 if actualIBSize != expectedIBSize:
-    raise RuntimeError("Index buffer size does not match the expected 4-byte index format.")
+	raise RuntimeError("Index buffer size does not match the expected 4-byte index format.")
