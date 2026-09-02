@@ -23,7 +23,7 @@ void main(
 	outObjectUV = objectUV;
 
 	// Convert Blender coordinates to Endfield world-space coordinates
-	float3 gamePos = float3(objectPos.x, objectPos.z, -objectPos.y);
+	float3 gamePos = float3(objectPos.x, objectPos.z, objectPos.y);
 	outWorldPos = gamePos;
 
 	// Convert world position to camera-relative position
