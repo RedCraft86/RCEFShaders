@@ -1,6 +1,6 @@
 // CustomShader for RCEFShaders EFMI mod
 
-Texture2D<float4> t27 : register(t27);
+Texture2D<float4> t24 : register(t24);
 
 void main(
 	float4 v0 : SV_Position0,
@@ -11,7 +11,7 @@ void main(
 	r0.xy = (uint2)v0.xy;
 	r0.z = 0;
 
-	o0.xyz = t27.Load(r0.xyz).xyz;
+	o0.xyz = t24.Load(r0.xyz).xyz;
 	o0.w = 1;
 
 	return;
