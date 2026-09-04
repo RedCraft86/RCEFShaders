@@ -12,7 +12,7 @@ Check the Wiki page: https://github.com/RedCraft86/RCEFShaders/wiki
 
 ## Installation
 - Make sure you have https://github.com/SpectrumQT/XXMI-Launcher
-- Install EFMI by clicking on Arknights: Endfield, switching to that tab, and installing
+- Install EFMI by clicking on the game, switching to that tab, and installing
 - Click on the 3 vertical dots next to "Start" and select "Open Mods Folder"
 - Extract RCEFShaders into the mods folder, do not move any internal files around
 
