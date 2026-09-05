@@ -15,7 +15,7 @@ void main(
 	const float4 faceColor = float4(0.0, 1.0, 1.0, 0.1);  // Color and Opacity for wall faces [RGBA 0..1]
 	const float4 edgeColor = float4(0.0, 0.1, 0.3, 0.5);  // Color and Opacity for wall edges [RGBA 0..1]
 
-	const float maxDistance = 300.0;   // Maximum render distance from the camera [0..inf, negative to disable]
+	const float maxDistance = 400.0;   // Maximum render distance from the camera [0..inf, negative to disable]
 	const float innerWidth = 0.75;     // Width of the solid edge border in screen-space pixels [0..inf]
 	const float outerWidth = 1.25;     // Width of the edge transition/anti-aliasing beyond the solid border [innerWidth..inf]
 	// ---------------------------
