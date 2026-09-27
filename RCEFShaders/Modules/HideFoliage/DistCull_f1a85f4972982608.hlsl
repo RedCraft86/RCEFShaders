@@ -23,6 +23,7 @@ cbuffer DistCullParams : register(b4)
 
 
 #define cmp -
+Texture1D<float4> IniParams : register(t120);
 
 void main(
 	float4 v0 : SV_Position0,
@@ -32,7 +33,7 @@ void main(
 	uint v4 : TEXCOORD3)
 {
 	// Near distance culling logic
-	if (v0.w < MaxDist)
+	if (v0.w < IniParams[186].x)
 		discard;
 
 
