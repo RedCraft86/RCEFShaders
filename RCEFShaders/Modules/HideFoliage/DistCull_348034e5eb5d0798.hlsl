@@ -20,7 +20,7 @@ cbuffer cb0 : register(b0)
 }
 
 
-cbuffer DistCullParams : register(b3)
+cbuffer DistCullParams : register(b4)
 {
 	float MaxDist;
 	float3 _pad;
