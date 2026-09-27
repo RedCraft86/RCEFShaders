@@ -9,10 +9,11 @@
 [Alt] + [NUM 4]: Unlit View
 
 [Alt] + [NUM 5]: Hide Foliage
+(cycles between Off, All, Nearby)
 
 [Alt] + [NUM 6]: Hide Game UI
 
 [Alt] + [NUM 7]: Show Camera Coordinates
 
 [Alt] + [NUM 8]: Show Invisible Walls
-(cycles between Off, Valley 4, and Wuling)
+(cycles between Off, Valley 4, Wuling)
