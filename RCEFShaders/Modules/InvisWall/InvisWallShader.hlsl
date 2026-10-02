@@ -1,7 +1,58 @@
-// CustomShader for RCEFShaders EFMI mod
+// Custom Shader for RCEFShaders EFMI mod
 
+#ifdef VERTEX_SHADER
+cbuffer CameraCB : register(b0)
+{
+	float4 cb0[82];
+};
+
+cbuffer FrameCB : register(b1)
+{
+	float4 cb1[20];
+};
+
+void main(
+	float3 objectPos : POSITION,
+	float2 objectUV : TEXCOORD0,
+	out float4 outClipPos : SV_Position,
+	out float2 outObjectUV : TEXCOORD0,
+	out float3 outWorldPos : TEXCOORD1,
+	out nointerpolation float outViewDist : TEXCOORD2
+)
+{
+	// Pass mesh UVs to PS for barycentric edge rendering
+	outObjectUV = objectUV;
+
+	// Convert Blender coordinates to Endfield world-space coordinates
+	float3 gamePos = float3(objectPos.x, objectPos.z, objectPos.y);
+	outWorldPos = gamePos;
+
+	// Convert world position to camera-relative position
+	float3 relativePos = gamePos - cb0[44].xyz;
+	outViewDist = length(relativePos); // Dist from camera for dist culling
+
+	// Transform camera-relative world position into clip space
+	float4 clip = cb0[32] * relativePos.x
+				+ cb0[33] * relativePos.y
+				+ cb0[34] * relativePos.z
+				+ cb0[35];
+
+	// Correct vertical projection and output the final clip-space position
+	clip.y = -clip.y;
+	outClipPos = clip;
+
+	return;
+}
+#endif
+
+#ifdef PIXEL_SHADER
 Texture2D<float> SceneDepth : register(t1);
-Texture2D<float> ResProvider : register(t2);
+Texture2D<float> ViewportSize : register(t2);
+
+cbuffer VolumeColor : register(b0)
+{
+	float4 color;
+}
 
 void main(
 	float4 clipPos : SV_Position,
@@ -12,13 +63,13 @@ void main(
 )
 {
 	// ----- Editable params -----
-	const float4 faceColor = float4(0.0, 1.0, 1.0, 0.1);  // Color and Opacity for wall faces [RGBA 0..1]
-	const float4 edgeColor = float4(0.0, 0.1, 0.3, 0.5);  // Color and Opacity for wall edges [RGBA 0..1]
-
 	const float maxDistance = 400.0;   // Maximum render distance from the camera [0..inf, negative to disable]
 	const float innerWidth = 0.75;     // Width of the solid edge border in screen-space pixels [0..inf]
 	const float outerWidth = 1.25;     // Width of the edge transition/anti-aliasing beyond the solid border [innerWidth..inf]
 	// ---------------------------
+
+	const float4 faceColor = float4(color.rgb, 0.1f);
+	const float4 edgeColor = float4(color.rgb * 0.5, 0.5f);
 
 	// Skip rendering tris beyond the render distance
 	if (maxDistance > 0.0 && viewDist > maxDistance) {
@@ -31,7 +82,7 @@ void main(
 
 	// Get the size of the game viewport
 	uint resWidth, resHeight;
-	ResProvider.GetDimensions(resWidth, resHeight);
+	ViewportSize.GetDimensions(resWidth, resHeight);
 
 	// Depth buffer is likely at a lower resolution so we create a multiplier
 	float2 screenUV = clipPos.xy / float2(resWidth, resHeight);
@@ -76,3 +127,4 @@ void main(
 
 	return;
 }
+#endif

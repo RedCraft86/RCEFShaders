@@ -1,4 +1,4 @@
-// CustomShader for RCEFShaders EFMI mod
+// Custom Shader for RCEFShaders EFMI mod
 
 cbuffer CameraCB : register(b0)
 {

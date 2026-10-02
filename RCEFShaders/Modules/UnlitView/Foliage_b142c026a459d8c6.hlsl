@@ -1,4 +1,4 @@
-// CustomShader for RCEFShaders EFMI mod
+// Custom Shader for RCEFShaders EFMI mod
 
 Texture2D<float4> t24 : register(t24);
 
