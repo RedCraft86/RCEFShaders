@@ -7,7 +7,7 @@
 # Don't ignore project files
 !Previews/
 !Previews/*
-!RCEFShaders/
-!RCEFShaders/*
+!Mod/
+!Mod/*
 !Utilities/
 !Utilities/*
