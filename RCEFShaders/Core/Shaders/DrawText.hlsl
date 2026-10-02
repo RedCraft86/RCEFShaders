@@ -168,7 +168,21 @@ void main(
 	out float4 outColor : SV_Target0
 )
 {
-	float coverage = Font.Load(int3(int2(texel), 0));
+	uint fontWidth, fontHeight;
+	Font.GetDimensions(fontWidth, fontHeight);
+
+	float cellHeight = fontHeight / 6;
+	float rowTop = floor(texel.y / cellHeight) * cellHeight;
+
+	// Sample higher in the atlas to move the visible text down.
+	float2 sampleTexel = texel;
+	sampleTexel.y = clamp(
+		texel.y - cellHeight / 16.0f,
+		rowTop,
+		rowTop + cellHeight - 1
+	);
+
+	float coverage = Font.Load(int3(int2(sampleTexel), 0));
 
 	if (BGColor.a > 0) {
 		coverage = saturate(coverage * 1.25f);
