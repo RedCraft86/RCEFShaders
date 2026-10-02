@@ -1,7 +1,7 @@
 {
-	"name": "migoto-ini",
-	"displayName": "3DMigoto INI",
-	"description": "Extension for working with .ini files used by 3DMigoto.",
+	"name": "migoto",
+	"displayName": "3DMigoto",
+	"description": "Extension for working with .ini and .hlsl files used by 3DMigoto.",
 	"author": {
 		"name": "LupoMikti",
 		"url": "https://github.com/lupomikti"
@@ -48,9 +48,23 @@
 					".migoto"
 				],
 				"configuration": "./migoto.language-configuration.json"
+			},
+			{
+				"id": "migoto-hlsl",
+				"aliases": [
+					"Migoto HLSL"
+				],
+				"extensions": [
+					".hlsl"
+				]
 			}
 		],
 		"grammars": [
+			{
+				"language": "migoto-hlsl",
+				"scopeName": "source.migoto.hlsl",
+				"path": "./syntaxes/migoto-hlsl.tmLanguage.json"
+			},
 			{
 				"language": "migoto",
 				"scopeName": "source.migoto",
@@ -71,14 +85,5 @@
 				"path": "./snippets/migoto.snippets.json"
 			}
 		]
-	},
-	"devDependencies": {
-		"@types/bun": "^1.3.8",
-		"@types/node": "^25.1.0",
-		"@types/vscode": "^1.73.0",
-		"typescript": "^5.6.2"
-	},
-	"scripts": {
-		"package": "vsce package --no-git-tag-version"
 	}
 }

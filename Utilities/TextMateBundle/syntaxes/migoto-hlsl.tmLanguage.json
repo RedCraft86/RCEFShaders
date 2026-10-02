@@ -1,0 +1,72 @@
+{
+  "name": "migoto-hlsl",
+  "scopeName": "source.migoto.hlsl",
+  "fileTypes": [
+    "hlsl"
+  ],
+  "patterns": [
+    {
+      "include": "#resource-types"
+    },
+    {
+      "include": "#buffer-declarations"
+    },
+    {
+      "include": "#register-bindings"
+    },
+    {
+      "include": "#semantics"
+    },
+    {
+      "include": "source.hlsl"
+    }
+  ],
+  "repository": {
+    "resource-types": {
+      "name": "storage.type.resource.hlsl",
+      "match": "\\b(?:Texture1D|Texture1DArray|Texture2D|Texture2DArray|Texture2DMS|Texture2DMSArray|Texture3D|TextureCube|TextureCubeArray|RWTexture1D|RWTexture1DArray|RWTexture2D|RWTexture2DArray|RWTexture3D|RasterizerOrderedTexture1D|RasterizerOrderedTexture1DArray|RasterizerOrderedTexture2D|RasterizerOrderedTexture2DArray|RasterizerOrderedTexture3D|Buffer|StructuredBuffer|ByteAddressBuffer|ConstantBuffer|AppendStructuredBuffer|ConsumeStructuredBuffer|RWBuffer|RWStructuredBuffer|RWByteAddressBuffer|RasterizerOrderedBuffer|RasterizerOrderedStructuredBuffer|RasterizerOrderedByteAddressBuffer|InputPatch|OutputPatch|LineStream|PointStream|TriangleStream|SamplerState|SamplerComparisonState|sampler|sampler1D|sampler2D|sampler3D|samplerCUBE|sampler_state|texture2D|textureCUBE)\\b"
+    },
+    "buffer-declarations": {
+      "match": "\\b(cbuffer|tbuffer)([ \\t]+)([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "storage.type.structured.hlsl"
+        },
+        "3": {
+          "name": "entity.name.class.buffer.hlsl"
+        }
+      }
+    },
+    "register-bindings": {
+      "match": "\\b(register)\\s*(\\()\\s*([tbus][0-9]+)\\s*(?:,\\s*(space[0-9]+)\\s*)?(\\))",
+      "captures": {
+        "1": {
+          "name": "keyword.other.binding.hlsl"
+        },
+        "2": {
+          "name": "punctuation.section.arguments.begin.hlsl"
+        },
+        "3": {
+          "name": "constant.language.register.hlsl"
+        },
+        "4": {
+          "name": "constant.language.register-space.hlsl"
+        },
+        "5": {
+          "name": "punctuation.section.arguments.end.hlsl"
+        }
+      }
+    },
+    "semantics": {
+      "match": "(:)[ \\t]*((?i:SV_[a-z_][a-z0-9_]*|(?:BINORMAL|BLENDINDICES|BLENDWEIGHT|COLOR|NORMAL|POSITIONT|POSITION|PSIZE|TANGENT|TEXCOORD|FOG|TESSFACTOR|VFACE|VPOS|DEPTH)[0-9]*))\\b",
+      "captures": {
+        "1": {
+          "name": "punctuation.separator.semantic.hlsl"
+        },
+        "2": {
+          "name": "constant.language.semantic.hlsl"
+        }
+      }
+    }
+  }
+}
