@@ -102,7 +102,6 @@ void WriteLabel(inout uint index, uint letter)
 {
 	WriteChar(index, letter);
 	WriteChar(index, 58); // ':'
-	WriteChar(index, 32); // space
 }
 
 void WritePosition(inout uint index, float3 position)
