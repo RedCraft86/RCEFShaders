@@ -85,7 +85,7 @@ cbuffer ImageTint : register(b0)
 
 float4 main(
 	float4 Position : SV_Position,
-	float2 Texel : TEXCOORD0
+	float2 UV : TEXCOORD0
 ) : SV_Target0
 {
 	uint ImageWidth, ImageHeight;
