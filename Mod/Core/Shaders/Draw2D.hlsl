@@ -13,11 +13,11 @@
  *	                (R G B A) [0..1]
  *
  *	[ResourceImageExample]
- *	filename = path/to/image.png
+ *	filename = path\to\image.png
  *
  *	[CustomShaderDrawTest]
- *	vs = Shaders/Draw2D.hlsl
- *	ps = Shaders/Draw2D.hlsl
+ *	vs = Shaders\Draw2D.hlsl
+ *	ps = Shaders\Draw2D.hlsl
  *	cs = null
  *	ds = null
  *	gs = null
