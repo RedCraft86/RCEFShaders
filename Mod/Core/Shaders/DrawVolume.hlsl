@@ -94,7 +94,7 @@ float4 main(
     float edge = 1.0 - interior; // 1 = edge | 0 = interior
 
 	const float4 faceColor = float4(Color, 0.1f);
-	const float4 edgeColor = float4(Color * 0.5f, 0.5f);
+	const float4 edgeColor = float4(Color * 0.2f, 0.5f);
 	return lerp(faceColor, edgeColor, edge);
 }
 #endif
