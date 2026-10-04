@@ -1,9 +1,9 @@
 // HLSL shaders for RCEFShaders
 // Writes character coordinates from the terrain lighting-volume anchor.
 
-cbuffer PlayerCB : register(b0)
+cbuffer SceneBuffer : register(b0)
 {
-	float4 PlayerData[1];
+	float4 SceneData[157];
 };
 
 RWBuffer<uint> OutputText : register(u0);
@@ -120,8 +120,8 @@ void main(uint3 id : SV_DispatchThreadID)
 
 	uint index = 0;
 
-	// ViewConstants extracts terrain FrameCB[132]; preserve XYZ order.
-	WritePosition(index, PlayerData[0].xyz);
+	// Read the observed player anchor from shared SceneCB; preserve XYZ order.
+	WritePosition(index, SceneData[132].xyz);
 
 	// WriteChar always reserves the last slot for the null terminator.
 	OutputText[index] = 0;
