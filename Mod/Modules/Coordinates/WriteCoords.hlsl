@@ -13,8 +13,7 @@ static const uint TEXT_CAPACITY = 128;
 
 void WriteChar(inout uint index, uint character)
 {
-	if (index < TEXT_CAPACITY - 1)
-	{
+	if (index < TEXT_CAPACITY - 1) {
 		OutputText[index] = character;
 		index++;
 	}
@@ -25,21 +24,18 @@ void WriteUInt(inout uint index, uint value)
 	uint digits[10];
 	uint count = 0;
 
-	if (value == 0)
-	{
+	if (value == 0) {
 		WriteChar(index, 48); // '0'
 		return;
 	}
 
-	while (value > 0 && count < 10)
-	{
+	while (value > 0 && count < 10) {
 		digits[count] = value % 10;
 		value /= 10;
 		count++;
 	}
 
-	while (count > 0)
-	{
+	while (count > 0) {
 		count--;
 
 		WriteChar(
@@ -51,8 +47,7 @@ void WriteUInt(inout uint index, uint value)
 
 void WriteFloat3(inout uint index, float value)
 {
-	if (value < 0.0)
-	{
+	if (value < 0.0) {
 		WriteChar(index, 45); // '-'
 		value = -value;
 	}
@@ -62,8 +57,7 @@ void WriteFloat3(inout uint index, float value)
 	uint fractionalPart =(uint)round(fractionalValue * 1000.0);
 
 	// Handle rounding such as: 12.9997 -> 13.000
-	if (fractionalPart >= 1000)
-	{
+	if (fractionalPart >= 1000) {
 		integerPart++;
 		fractionalPart = 0;
 	}
@@ -120,8 +114,7 @@ void WritePosition(inout uint index, float3 position)
 void main(uint3 id : SV_DispatchThreadID)
 {
 	[unroll]
-	for (uint i = 0; i < TEXT_CAPACITY; i++)
-	{
+	for (uint i = 0; i < TEXT_CAPACITY; i++) {
 		OutputText[i] = 0;
 	}
 
