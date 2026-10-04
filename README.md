@@ -4,8 +4,8 @@
 RCEFShaders (formerly RCEFVision) is an EFMI mod that adds custom rendering features aimed towards people who set up complex Out-of-Bounds Zipline networks (otherwise known as Zipmaxxers).
 
 ## Quick Notes
-- Made for Game Version 1.5; may or may not work with later versions
-- Press Alt + END to view the Keybinds for each feature!
+- Made for Game Version 1.5 (for now)
+- Press Alt + END to view the interactive menu to enable each feature.
 
 ## Features
 Check the Wiki page: https://github.com/RedCraft86/RCEFShaders/wiki
@@ -18,8 +18,7 @@ Check the Wiki page: https://github.com/RedCraft86/RCEFShaders/wiki
 
 **Final directory structure should look like this:**
 ```
-./EFMI/Mods/RCEFShaders/Libraries/...
+./EFMI/Mods/RCEFShaders/Core/...
+                      ⌞/Libraries/...
                       ⌞/Modules/...
-                      ⌞/KeyInfo.txt
-                      ⌞/RCEFShaders.ini
 ```
