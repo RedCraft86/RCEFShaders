@@ -1,6 +1,8 @@
 # Ignore everything except ourselves and a few files
 /*
 !.gitignore
+!.gitattributes
+!.gitmodules
 !README.md
 !LICENSE
 !Logo.png
@@ -12,3 +14,9 @@
 !Mod/*
 !Utilities/
 !Utilities/*
+
+# Ignore experimental content
+Utilities/Datamine/Experimental
+
+# Ignore game directiory link
+Utilities/Datamine/GameDirectory

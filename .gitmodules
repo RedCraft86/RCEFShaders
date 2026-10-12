@@ -1,0 +1,4 @@
+[submodule "Utilities/Datamine/ResearchKit"]
+	path = Utilities/Datamine/ResearchKit
+	url = https://github.com/Variante/endfield_research_kit.git
+	branch = release
