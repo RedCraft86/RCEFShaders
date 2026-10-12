@@ -18,5 +18,14 @@
 # Ignore experimental content
 Utilities/Datamine/Experimental
 
-# Ignore game directiory link
+# Ignore data files
+Utilities/RuntimeExtract
 Utilities/Datamine/GameDirectory
+Utilities/Datamine/WallTools/data
+Utilities/Datamine/WallTools/InvisWalls_*
+Utilities/Datamine/ZoneTools/data/
+Utilities/Datamine/ZoneTools/exports/
+Utilities/Datamine/ZoneTools/**/__pycache__/
+
+# Ignore blend files used to reconstruct volume datasets
+*.blend

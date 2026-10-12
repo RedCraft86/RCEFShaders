@@ -1,0 +1,16 @@
+{
+  "game_data": "C:/Games/GRYPHLINK/games/Arknights Endfield/Endfield_Data",
+  "research_kit": "../ResearchKit",
+  "output": "data",
+  "native_inputs": "data/native-inputs",
+  "native_evidence": "data/native-evidence.json",
+  "regions": [
+    "map01",
+    "map02"
+  ],
+  "kinds": [
+    "death",
+    "teleport"
+  ],
+  "blender_export_dir": "exports"
+}
