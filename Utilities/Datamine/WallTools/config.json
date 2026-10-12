@@ -1,0 +1,34 @@
+{
+  "game_data": "C:/Games/GRYPHLINK/games/Arknights Endfield/Endfield_Data",
+  "output": "data",
+  "regions": [
+    "map01",
+    "map02"
+  ],
+  "accepted_signatures": [
+    [
+      6,
+      114,
+      530440,
+      0,
+      1
+    ],
+    [
+      6,
+      114,
+      595978,
+      0,
+      1
+    ]
+  ],
+  "excluded_source_suffixes": {
+    "map01": [
+      "2_0",
+      "3_0"
+    ]
+  },
+  "maximum_compound_boxes": 100,
+  "maximum_decoded_bytes": 100000000,
+  "research_kit": "../ResearchKit",
+  "blender_export_dir": "."
+}
