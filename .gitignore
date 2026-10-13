@@ -5,27 +5,8 @@
 !.gitmodules
 !README.md
 !LICENSE
-!Logo.png
 
 # Don't ignore project files
-!Previews/
-!Previews/*
-!Mod/
-!Mod/*
-!Utilities/
-!Utilities/*
-
-# Ignore experimental content
-Utilities/Datamine/Experimental
-
-# Ignore data files
-Utilities/RuntimeExtract
-Utilities/Datamine/GameDirectory
-Utilities/Datamine/WallTools/data
-Utilities/Datamine/WallTools/InvisWalls_*
-Utilities/Datamine/ZoneTools/data/
-Utilities/Datamine/ZoneTools/exports/
-Utilities/Datamine/ZoneTools/**/__pycache__/
-
-# Ignore blend files used to reconstruct volume datasets
-*.blend
+!Modules/
+!Libraries/
+!Core/
