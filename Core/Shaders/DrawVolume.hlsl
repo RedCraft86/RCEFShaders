@@ -53,8 +53,10 @@ float4 main(
 	}
 
 	// ----- Editable params -----
-	const float innerWidth = 0.75; // Width of the solid edge border in screen-space pixels [0..inf]
-	const float outerWidth = 1.25; // Width of the edge transition beyond the solid border [innerWidth..inf]
+	// Approximate screen-space distances measured inward from each triangle edge.
+	// Require 0 <= innerWidth < outerWidth; the fade spans outerWidth - innerWidth.
+	const float innerWidth = 0.75; // Full edge color up to this distance. [0..inf]
+	const float outerWidth = 1.25; // Fade ends at this distance, reaching the face color. [innerWidth..inf]
 	// ---------------------------
 
 	uint resWidth, resHeight;
@@ -85,10 +87,10 @@ float4 main(
 	 */
 	float3 bary = float3(meshUV, 1.0f - meshUV.x - meshUV.y);
 
-	// Keeps borders consistent in pixel width as distance from camera changes
+	// fwidth keeps the apparent width approximately stable as camera distance changes.
 	float3 ssWidth = fwidth(bary);
 
-	// Find the exterior "edge" of triangles
+	// Detect every triangle edge, including shared edges and triangulation diagonals.
 	float3 interiorMask = smoothstep(ssWidth * innerWidth, ssWidth * outerWidth, bary);
     float interior = min(interiorMask.x, min(interiorMask.y, interiorMask.z));
     float edge = 1.0 - interior; // 1 = edge | 0 = interior
