@@ -63,8 +63,8 @@ float4 main(
 	// ----- Editable params -----
 	// Approximate screen-space distances measured inward from each triangle edge.
 	// Require 0 <= innerWidth < outerWidth; the fade spans outerWidth - innerWidth.
-	const float innerWidth = 0.75; // Full edge color up to this distance. [0..inf]
-	const float outerWidth = 1.25; // Fade ends at this distance, reaching the face color. [innerWidth..inf]
+	const float innerWidth = 1.0; // Full edge color up to this distance. [0..inf]
+	const float outerWidth = 1.5; // Fade ends at this distance, reaching the face color. [innerWidth..inf]
 	// ---------------------------
 
 	uint resWidth, resHeight;
