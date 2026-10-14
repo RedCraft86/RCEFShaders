@@ -35,6 +35,7 @@ void main(
 #ifdef PIXEL_SHADER
 Texture2D<float> ViewportSize : register(t1);
 Texture2D<float> SceneDepth : register(t2);
+Buffer<uint> EdgeMasks : register(t3);
 
 cbuffer VolumeData : register(b0)
 {
@@ -45,7 +46,8 @@ cbuffer VolumeData : register(b0)
 float4 main(
 	float4 clipPos : SV_Position,
 	float2 meshUV : TEXCOORD0,
-	nointerpolation float viewDist : TEXCOORD1
+	nointerpolation float viewDist : TEXCOORD1,
+	uint primitiveId : SV_PrimitiveID
 ) : SV_Target
 {
 	if (MaxDist > 0.0f && viewDist > MaxDist) {
@@ -77,23 +79,14 @@ float4 main(
 		discard;
 	}
 
-	/**
-	 * Triangle Barycentric Coordinates
-	 *    Vertex 0 -> (0, 0)
-	 *    Vertex 1 -> (1, 0)
-	 *    Vertex 2 -> (0, 1)
-	 *
-	 * This lets us detect the proximity to each edge
-	 */
-	float3 bary = float3(meshUV, 1.0f - meshUV.x - meshUV.y);
-
-	// fwidth keeps the apparent width approximately stable as camera distance changes.
-	float3 ssWidth = fwidth(bary);
-
-	// Detect every triangle edge, including shared edges and triangulation diagonals.
-	float3 interiorMask = smoothstep(ssWidth * innerWidth, ssWidth * outerWidth, bary);
-    float interior = min(interiorMask.x, min(interiorMask.y, interiorMask.z));
-    float edge = 1.0 - interior; // 1 = edge | 0 = interior
+	// Mask bit i enables the edge opposite triangle corner i. Compute derivatives
+	// before discard branches, and suppress shared coplanar edges using exporter masks.
+	float3 bary = float3(1.0f - meshUV.x - meshUV.y, meshUV.x, meshUV.y);
+	float3 pixelWidth = fwidth(bary);
+	uint mask = EdgeMasks[primitiveId];
+	float3 enabledEdges = float3(mask & 1u, (mask >> 1u) & 1u, (mask >> 2u) & 1u);
+	float3 edgeStrength = (1.0f - smoothstep(pixelWidth * innerWidth, pixelWidth * outerWidth, bary)) * enabledEdges;
+	float edge = max(edgeStrength.x, max(edgeStrength.y, edgeStrength.z));
 
 	const float4 faceColor = float4(Color, 0.1f);
 	const float4 edgeColor = float4(Color * 0.2f, 0.5f);
