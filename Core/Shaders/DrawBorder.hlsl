@@ -95,8 +95,7 @@ float4 main(
 	float3 edgeStrength = (1.0f - smoothstep(pixelWidth * innerWidth, pixelWidth * outerWidth, bary)) * enabledEdges;
 	float edge = max(edgeStrength.x, max(edgeStrength.y, edgeStrength.z));
 
-	// Derive the face orientation before any per-pixel discard. Absolute normal
-	// components give opposite-facing surfaces the same world-axis color blend.
+	// Absolute normal components give opposite-facing surfaces the same axis colors.
 	float3 axisNormal = abs(cross(ddx(relativeWorldPos), ddy(relativeWorldPos)));
 	float normalSum = axisNormal.x + axisNormal.y + axisNormal.z;
 	float3 axisWeights = axisNormal / (normalSum > 0.0f ? normalSum : 1.0f);
@@ -104,7 +103,9 @@ float4 main(
 		axisWeights = float3(0.0f, 1.0f, 0.0f);
 	}
 
-	float3 color = ColorX * axisWeights.x + ColorY * axisWeights.y + ColorZ * axisWeights.z;
+	// Add full colors for participating axes; ignore tiny components.
+	float3 colorAxes = step(0.01f, axisWeights);
+	float3 color = saturate(ColorX * colorAxes.x + ColorY * colorAxes.y + ColorZ * colorAxes.z);
 	float opacity = dot(float3(OpacityX, OpacityY, OpacityZ), axisWeights);
 	return float4(lerp(color, color * 0.2f, edge), saturate(opacity));
 }
