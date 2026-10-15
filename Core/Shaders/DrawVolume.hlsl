@@ -82,6 +82,7 @@ float4 main(
 	// Mask bit i enables the edge opposite triangle corner i. Compute derivatives
 	// before discard branches, and suppress shared coplanar edges using exporter masks.
 	float3 bary = float3(1.0f - meshUV.x - meshUV.y, meshUV.x, meshUV.y);
+	// fwidth keeps the apparent width approximately stable as camera distance changes.
 	float3 pixelWidth = fwidth(bary);
 	uint mask = EdgeMasks[primitiveId];
 	float3 enabledEdges = float3(mask & 1u, (mask >> 1u) & 1u, (mask >> 2u) & 1u);

@@ -56,7 +56,7 @@ cbuffer AxisZData : register(b2)
 float4 main(
 	float4 clipPos : SV_Position,
 	float2 meshUV : TEXCOORD0,
-	float3 relativeWorldPos : TEXCOORD1,
+	float3 relativePos : TEXCOORD1,
 	uint primitiveId : SV_PrimitiveID
 ) : SV_Target
 {
@@ -96,7 +96,7 @@ float4 main(
 	float edge = max(edgeStrength.x, max(edgeStrength.y, edgeStrength.z));
 
 	// Absolute normal components give opposite-facing surfaces the same axis colors.
-	float3 axisNormal = abs(cross(ddx(relativeWorldPos), ddy(relativeWorldPos)));
+	float3 axisNormal = abs(cross(ddx(relativePos), ddy(relativePos)));
 	float normalSum = axisNormal.x + axisNormal.y + axisNormal.z;
 	float3 axisWeights = axisNormal / (normalSum > 0.0f ? normalSum : 1.0f);
 	if (normalSum == 0.0f) {
