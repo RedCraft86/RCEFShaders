@@ -11,6 +11,16 @@ cbuffer cb1 : register(b1)
 	float4 cb1[105];
 }
 
+cbuffer cb2 : register(b2)
+{
+    float4 cb2[4085];
+};
+
+cbuffer cb3 : register(b3)
+{
+    float4 cb3[40];
+};
+
 void main(
 	float4 v0 : SV_Position0,
 	float4 v1 : TEXCOORD0,
@@ -104,8 +114,8 @@ void main(
 	const float3 luminanceWeights = float3(0.212672904, 0.715152204, 0.0721750036);
 	float luminance = dot(encodedColor, luminanceWeights);
 	float3 gradedColor = (luminance + cb1[104].w * (encodedColor - luminance)) * cb1[104].xyz;
-	o1.rgb = lerp(encodedColor, gradedColor, cb3[2].w);
-	o1.a = opacity * max(0.0, inverseBlendMode);
+	o0.rgb = lerp(encodedColor, gradedColor, cb3[2].w);
+	o0.a = opacity * max(0.0, inverseBlendMode);
 
 	// Preserve the second target's encoded motion and material mask.
 	float2 currentNDC = v5.xy / max(1e-8, v5.z);
@@ -113,10 +123,10 @@ void main(
 	float2 motion = (currentNDC - previousNDC) * float2(0.5, -0.5);
 	float2 encodedMotion = sign(motion) * sqrt(sqrt(abs(motion))) * 0.5 + 0.5;
 	bool writeMotion = saturate(1.0 + cb3[0].w - cb3[0].x) > 0.5;
-	o2.xy = writeMotion ? min(float2(1.0, 1.0), encodedMotion) : float2(0.0, 0.0);
-	o2.z = 1.0;
+	o1.xy = writeMotion ? min(float2(1.0, 1.0), encodedMotion) : float2(0.0, 0.0);
+	o1.z = 1.0;
 
 	float maskCoverage = max(dot(color, luminanceWeights) * opacity, opacity * inverseBlendMode);
 	float materialMask = saturate(10.0 * maskCoverage) > 0.5 ? 1.0 : 0.0;
-	o2.w = cb3[0].z * cb3[0].x * materialMask;
+	o1.w = cb3[0].z * cb3[0].x * materialMask;
 }
