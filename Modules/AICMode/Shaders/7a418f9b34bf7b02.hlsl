@@ -1,6 +1,8 @@
 // HLSL shaders for RCEFShaders
 // AIC Region
 
+Texture1D<float4> IniParams : register(t120);
+
 cbuffer cb0 : register(b0)
 {
 	float4 cb0[28];
@@ -8,7 +10,7 @@ cbuffer cb0 : register(b0)
 
 cbuffer cb1 : register(b1)
 {
-	float4 cb1[105];
+	float4 cb1[110];
 }
 
 cbuffer cb2 : register(b2)
@@ -36,13 +38,13 @@ void main(
 	// ----- Editable params -----
 	const float3 lineColor = float3(0.0, 1.0, 1.0); // Linear RGB, before game color grading.
 	const float3 fillColor = float3(0.0, 1.0, 1.0); // Linear RGB, before game color grading.
-	const float lineOpacity = 0.5;       // [0..1]
-	const float backgroundOpacity = 0.1; // [0..1]; use 0 for lines only.
-	const float lineWidth = 0.05;        // World units, perpendicular to the lines; <= 0 hides lines.
-	const float lineGap = 0.95;          // Clear gap in world units; <= 0 gives solid lines.
-	const float lineAngleDegrees = 45.0; // 0 = lines along the face's horizontal axis.
-	const float patternOffset = 0.0;     // World units, along the stripe normal.
-	const float panSpeed = 0.25;         // Horizontal world units per game-clock unit; 0 stops, negative reverses.
+	const float lineOpacity = 0.5;                  // [0..1]
+	const float fillOpacity = 0.1;                  // [0..1]; use 0 for lines only.
+	const float lineWidth = 0.05;                   // World units, perpendicular to the lines; <= 0 hides lines.
+	const float lineGap = 0.2;                      // Clear gap in world units; <= 0 gives solid lines.
+	const float lineAngleDegrees = 45.0;            // 0 = lines along the face's horizontal axis.
+	const float patternOffset = 0.0;                // World units, along the stripe normal.
+	const float panSpeed = -0.25;                   // Horizontal world units per second; 0 stops, negative reverses.
 	// ---------------------------
 
 	// Reconstruct world position without scene-depth sampling or distance fades.
@@ -67,10 +69,9 @@ void main(
 		facePosition = worldPos.xy;
 	}
 
-	// TEXCOORD2.z carries the original UV animation clock from VS cb2[103].w.
 	// Translate the horizontal axis before rotating into stripe coordinates.
 	// At 0 degrees this motion runs along the lines and is visually unchanged.
-	facePosition.x -= v3.z * panSpeed;
+	facePosition.x -= IniParams[98].x * panSpeed;
 	float width = max(lineWidth, 0.0);
 	float gap = max(lineGap, 0.0);
 	float period = max(width + gap, 1e-6);
@@ -94,7 +95,7 @@ void main(
 	}
 
 	float3 color = clamp(lerp(fillColor, lineColor, coverage), 0.0, 1000.0);
-	float opacity = saturate(lerp(backgroundOpacity, lineOpacity, coverage));
+	float opacity = saturate(lerp(fillOpacity, lineOpacity, coverage));
 
 	// Preserve the game's per-instance opacity and screen-door visibility.
 	float2 visibility = cb2[(v7 << 4u) + 4u].xy;
@@ -102,6 +103,10 @@ void main(
 	float signedNoise = visibility.x >= 0.0 ? noise : -noise;
 	float instanceCoverage = visibility.x - signedNoise > 0.0 ? 1.0 : 1.0 - cb3[0].x;
 	opacity *= (1.0 - visibility.y) * instanceCoverage;
+
+	float frameOpacity = 1.0 + cb3[38].y * (cb1[109].x - 1.0);
+	float materialOpacity = cb3[38].w < 0.5 ? 1.0 : cb3[38].z;
+	opacity *= frameOpacity * materialOpacity;
 
 	// Preserve the original render-target encoding for the material's blend mode.
 	float blendMode = cb3[0].y;
@@ -112,10 +117,7 @@ void main(
 	}
 
 	const float3 luminanceWeights = float3(0.212672904, 0.715152204, 0.0721750036);
-	float luminance = dot(encodedColor, luminanceWeights);
-	float3 gradedColor = (luminance + cb1[104].w * (encodedColor - luminance)) * cb1[104].xyz;
-	o0.rgb = lerp(encodedColor, gradedColor, cb3[2].w);
-	o0.a = opacity * max(0.0, inverseBlendMode);
+	o0 = float4(encodedColor.rgb,  opacity * max(0.0, inverseBlendMode));
 
 	// Preserve the second target's encoded motion and material mask.
 	float2 currentNDC = v5.xy / max(1e-8, v5.z);
