@@ -3,7 +3,7 @@
 
 cbuffer SceneBuffer : register(b0)
 {
-	float4 SceneData[157];
+	float4 SceneData[160];
 };
 
 RWBuffer<uint> OutputText : register(u0);
@@ -120,8 +120,9 @@ void main(uint3 id : SV_DispatchThreadID)
 
 	uint index = 0;
 
-	// Read the observed player anchor from shared SceneCB; preserve XYZ order.
-	WritePosition(index, SceneData[132].xyz);
+	// Fix: the current terrain lighting-volume anchor is at 135; preserve XYZ order.
+	// Its relationship to player position still requires in-game verification.
+	WritePosition(index, SceneData[135].xyz);
 
 	// WriteChar always reserves the last slot for the null terminator.
 	OutputText[index] = 0;
