@@ -29,8 +29,7 @@ cbuffer DistanceControls : register(b4)
 {
 	float FoliageDist;
 	float GrassDist;
-	float DistCullShadows;
-	float _Padding;
+	float2 _Padding;
 };
 
 #define cmp -
