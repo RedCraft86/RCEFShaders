@@ -119,9 +119,6 @@ void main(uint3 id : SV_DispatchThreadID)
 	}
 
 	uint index = 0;
-
-	// Fix: the current terrain lighting-volume anchor is at 135; preserve XYZ order.
-	// Its relationship to player position still requires in-game verification.
 	WritePosition(index, SceneData[135].xyz);
 
 	// WriteChar always reserves the last slot for the null terminator.
