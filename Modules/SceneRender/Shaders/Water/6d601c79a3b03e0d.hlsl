@@ -13,7 +13,8 @@ SamplerState s0_s : register(s0);
 void main(
 	float4 v0 : SV_Position0,
 	float2 v1 : TEXCOORD0,
-	out float4 o0 : SV_Target0)
+	out float4 o0 : SV_Target0
+)
 {
 	// Don't draw water pixels hidden behind opaque geometry
 	const float waterDepth = t16.SampleLevel(s0_s, v1.xy, 0).x;

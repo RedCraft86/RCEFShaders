@@ -15,12 +15,12 @@ cbuffer cb1 : register(b1)
 
 cbuffer cb2 : register(b2)
 {
-    float4 cb2[4085];
+	float4 cb2[4085];
 };
 
 cbuffer cb3 : register(b3)
 {
-    float4 cb3[40];
+	float4 cb3[40];
 };
 
 void main(
@@ -33,7 +33,8 @@ void main(
 	float4 v6 : TEXCOORD5,
 	nointerpolation uint v7 : TEXCOORD6,
 	out float4 o0 : SV_Target0,
-	out float4 o1 : SV_Target1)
+	out float4 o1 : SV_Target1
+)
 {
 	// ----- Editable params -----
 	const float3 lineColor = float3(0.0, 1.0, 1.0); // Linear RGB, before game color grading.

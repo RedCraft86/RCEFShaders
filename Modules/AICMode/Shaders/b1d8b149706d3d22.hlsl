@@ -27,7 +27,8 @@ void main(
 	float4 v7 : TEXCOORD6,
 	nointerpolation uint v8 : TEXCOORD7,
 	out float4 o0 : SV_Target0,
-	out float4 o1 : SV_Target1)
+	out float4 o1 : SV_Target1
+)
 {
 	// ----- Editable params -----
 	const float opacity = 1.0;                    // Slice opacity [0..1]
