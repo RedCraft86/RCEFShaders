@@ -47,6 +47,6 @@ void main(
 	float4 behind = t15.SampleLevel(s3_s, distortedUV, 0); // reuse the reflection/scene buffer as backdrop
 
 	// Flat unlit tint, mostly see-through
-	o0.xyz = lerp(behind.xyz, waterTint, 0.3);
+	o0.xyz = lerp(behind.xyz, waterTint, 0.4);
 	o0.w = 1.0; // Does not do anything
 }
