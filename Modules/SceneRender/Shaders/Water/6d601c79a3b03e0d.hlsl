@@ -29,12 +29,12 @@ void main(
 	const float rippleOverlay = 2.0;                    // Intensity of ripples on the surface [0..inf]
 	const float refractionStrength = 0.025;             // Strength of background distortion caused by ripples [0..1]
 
-	const float waterOpacity = 0.40;                    // Base opacity of the water [0..1]
+	const float waterOpacity = 0.25;                    // Base opacity of the water [0..1]
 	const float rippleOpacityStrength = 0.80;           // Additional opacity applied to steep ripples [0..1]
 	const float rippleOpacityThreshold = 0.07;          // Minimum normal slope before opacity increases [0..1]
 	const float rippleOpacitySoftness = 0.30;           // Smoothness of the opacity transition [0..1]
 
-	const float foamOverlay = 5.0;                      // Intensity of pre-baked foam on the surface [0..inf]
+	const float foamOverlay = 2.0;                      // Intensity of pre-baked foam on the surface [0..inf]
 	// -------------------------
 
 	// ---- Decode octahedral normal ----
@@ -84,6 +84,6 @@ void main(
 
 	// ---- Final composition ----
 
-	o0.xyz = lerp(behind, waterTint, finalOpacity);
+	o0.xyz = lerp(behind * waterTint, waterTint, finalOpacity);
 	o0.w = 1.0;
 }
